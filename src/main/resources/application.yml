@@ -23,20 +23,7 @@ spring:
             authorization-grant-type: client_credentials
             scope: custom_mod
             
-#spring:
-#  security:
-#    oauth2:
-#      client:
-#        provider:
-#          okta:
-#            token-uri: https://login-uat.rhythmsynergy.com/oauth2/default/v1/token
-#            issuer-uri: https://login-uat.rhythmsynergy.com/oauth2/default
-#        registration:
-#          okta:
-#            client-id: 0oa1p7y26atYDWs7J1d7
-#            client-secret: WBhbCFa_y2OWiUi6fahB-q-1zsaMazKaWnq37cxC
-#            authorization-grant-type: client_credentials
-#            scope: api_access
+
         
             
             
