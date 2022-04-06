@@ -4,6 +4,8 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+//import com.google.common.base.Predicates;
+
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
@@ -17,13 +19,17 @@ public class SwaggerConfig {
 	
     @Bean
     public Docket customDocket(){
-        return new Docket(DocumentationType.SWAGGER_2)
-                .select()
-                //.apis(RequestHandlerSelectors.any())
-                .apis(RequestHandlerSelectors.basePackage("com.rhythm.integration"))
-                .paths(PathSelectors.regex("/v1/.*"))
-                .build().apiInfo(apiInfo());
+    	 return new Docket(DocumentationType.SWAGGER_2)
+    	            .forCodeGeneration(Boolean.TRUE)
+    	            .select()
+    	            .apis(RequestHandlerSelectors.basePackage("com.rhythm"))
+    	            .paths(PathSelectors.any())
+    	           // .paths(Predicates.not(PathSelectors.regex("/logout.*")))
+    	            .build()
+    	            .apiInfo(apiInfo());
     }
+    
+    
 
     @SuppressWarnings("deprecation")
 	private ApiInfo apiInfo() {

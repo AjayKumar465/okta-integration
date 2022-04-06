@@ -1,5 +1,6 @@
 package com.rhythm.integration.controller;
 
+import java.security.Principal;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Map;
@@ -16,15 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 public class TestOktaController {
 
 	@GetMapping("/helloworld")
-	@PreAuthorize("#oauth2.hasScope('custom_mod')")
-	public Object helloWorld(HttpServletRequest httpServletRequest) {
-		Map<String, Object> headers = new HashMap<>();
-		Enumeration<String> reqHeaders = httpServletRequest.getHeaderNames();
-		while (reqHeaders.hasMoreElements()) {
-			String headerName = reqHeaders.nextElement();
-			headers.put(headerName, httpServletRequest.getHeader(headerName));
-		}
-		return headers;
+	//@PreAuthorize("#oauth2.hasScope('custom_mod')")
+	public Object helloWorld(HttpServletRequest httpServletRequest,Principal principal) {
+		
+		return "Hello World "+principal.getName()+"!";
 	}
 
 }

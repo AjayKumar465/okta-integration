@@ -12,26 +12,21 @@ import org.springframework.web.reactive.function.client.WebClient;
 @Configuration
 public class OAuthClientConfiguration {
 
+	@Value("${spring.security.oauth2.client.provider.okta.token-uri}") String tokenUri;
+	@Value("${spring.security.oauth2.client.registration.okta.client-id}") String clientId;
+	@Value("${spring.security.oauth2.client.registration.okta.client-secret}") String clientSecret;
+	@Value("${spring.security.oauth2.client.registration.okta.scope}") String scope;
+	@Value("${spring.security.oauth2.client.registration.okta.authorization-grant-type}") String authorizationGrantType;
+	
 	@Bean
-	ReactiveClientRegistrationRepository clientRegistrations(@Value("${spring.security.oauth2.client.provider.okta.token-uri}") String token_uri,
-			@Value("${spring.security.oauth2.client.registration.okta.client-id}") String client_id,
-			@Value("${spring.security.oauth2.client.registration.okta.client-secret}") String client_secret,
-			@Value("${spring.security.oauth2.client.registration.okta.scope}") String scope,
-			@Value("${spring.security.oauth2.client.registration.okta.authorization-grant-type}") String authorizationGrantType
-
-	) {
-		ClientRegistration registration = ClientRegistration.withRegistrationId("okta").tokenUri(token_uri).clientId(client_id).clientSecret(client_secret).scope(scope)
-				.authorizationGrantType(new AuthorizationGrantType(authorizationGrantType)).build();
+	ReactiveClientRegistrationRepository clientRegistrations() {
+		ClientRegistration registration = oktaClientRegistration();
 		return new InMemoryReactiveClientRegistrationRepository(registration);
 	}
 
 	@Bean
-	ClientRegistration oktaClientRegistration(@Value("${spring.security.oauth2.client.provider.okta.token-uri}") String token_uri,
-			@Value("${spring.security.oauth2.client.registration.okta.client-id}") String client_id,
-			@Value("${spring.security.oauth2.client.registration.okta.client-secret}") String client_secret,
-			@Value("${spring.security.oauth2.client.registration.okta.scope}") String scope,
-			@Value("${spring.security.oauth2.client.registration.okta.authorization-grant-type}") String authorizationGrantType) {
-		return ClientRegistration.withRegistrationId("okta").tokenUri(token_uri).clientId(client_id).clientSecret(client_secret).scope(scope)
+	ClientRegistration oktaClientRegistration() {
+		return ClientRegistration.withRegistrationId("okta").tokenUri(tokenUri).clientId(clientId).clientSecret(clientSecret).scope(scope)
 				.authorizationGrantType(new AuthorizationGrantType(authorizationGrantType)).build();
 	}
 
