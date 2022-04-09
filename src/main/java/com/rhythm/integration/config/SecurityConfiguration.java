@@ -48,7 +48,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	public void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().antMatchers(unsecuredResources.getResources().toArray(new String[unsecuredResources.getResources().size()])).permitAll().antMatchers("/**/*")
 				.authenticated().and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().securityContext();
-
+		http.csrf().disable();
+		http.headers().frameOptions().sameOrigin().httpStrictTransportSecurity().requestMatcher(new AntPathRequestMatcher("/**")).and()
+				.referrerPolicy(ReferrerPolicyHeaderWriter.ReferrerPolicy.NO_REFERRER);
 		http.oauth2ResourceServer().authenticationManagerResolver(customAuthenticationManager());
 	}
 
